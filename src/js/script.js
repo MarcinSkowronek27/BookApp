@@ -7,6 +7,9 @@
     },
     containerOf: {
       booksList: '.books-list',
+    },
+    listOf: {
+      bookImage: '.booksList .book__image',
     }
   }
 
@@ -35,5 +38,18 @@
 
   }
   render();
+
+  const favoriteBooks = [];
+  function initActions(){
+    const thisBook = this;
+
+    thisBook.elements = document.querySelectorAll(select.listOf.bookImage);
+    for (let image of thisBook.elements){
+
+    }
+    // console.log('list of images:', thisBook.elements);
+  }
+
+  initActions();
 }
 
