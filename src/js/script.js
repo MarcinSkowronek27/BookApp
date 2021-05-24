@@ -27,9 +27,9 @@
       const oneBook = dataSource.books[book];
       console.log('oneBook', oneBook);
       const bookContainer = document.querySelector(thisBook.booksList);
-      bookContainer.appendChild(oneBook);
+      bookContainer.appendChild(generatedDOM);
     }
-
+    // debugger;
     // console.log(thisBook.element);
 
 
