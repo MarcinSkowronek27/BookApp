@@ -6,7 +6,7 @@
       bookCart: '#template-book',
     },
     containerOf: {
-      booksList: '#books-list',
+      booksList: '.books-list',
     }
   }
 
@@ -20,14 +20,13 @@
 
     thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
     thisBook.booksList = document.querySelector(select.containerOf.booksList);
-
+    // console.log('bookList', thisBook.booksList);
     const generatedHTML = templates.bookHTML(dataSource.books);
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
     for (let book in dataSource.books) {
       const oneBook = dataSource.books[book];
       console.log('oneBook', oneBook);
-      const bookContainer = document.querySelector(thisBook.booksList);
-      bookContainer.appendChild(generatedDOM);
+      thisBook.booksList.appendChild(generatedDOM);
     }
     // debugger;
     // console.log(thisBook.element);
