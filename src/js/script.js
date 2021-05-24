@@ -6,25 +6,34 @@
       bookCart: '#template-book',
     },
     containerOf: {
-      book: '#books-list',
+      booksList: '#books-list',
     }
   }
 
   const templates = {
-    book: Handlebars.compile(document.querySelector(select.templateOf.bookCart).innerHTML),
+    bookHTML: Handlebars.compile(document.querySelector(select.templateOf.bookCart).innerHTML),
     // booksList: Handlebars.compile(document.querySelector(select.containerOf.book).innerHTML),
   };
 
-  function render(){
+  function render() {
     const thisBook = this;
-    for(let book of dataSource.books){
-      const generatedHTML = templates.book;
-      thisBook.element = utils.createDOMFromHTML(generatedHTML);
-      const bookContainer = document.querySelector(select.containerOf.book);
-      bookContainer.appendChild(thisBook.element);
+
+    thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
+    thisBook.booksList = document.querySelector(select.containerOf.booksList);
+
+    const generatedHTML = templates.bookHTML(dataSource.books);
+    const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+    for (let book in dataSource.books) {
+      const oneBook = dataSource.books[book];
+      console.log('oneBook', oneBook);
+      const bookContainer = document.querySelector(thisBook.booksList);
+      bookContainer.appendChild(oneBook);
     }
+
+    // console.log(thisBook.element);
+
+
   }
   render();
 }
 
-hfgdhfgdh
