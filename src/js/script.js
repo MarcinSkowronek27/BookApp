@@ -42,7 +42,8 @@
 
   }
   render();
-
+  const formular = document.querySelector('.filters');
+  console.log('formular', formular);
   const favoriteBooks = [];
   function initActions() {
     const thisBook = this;
@@ -51,7 +52,8 @@
     for (let image of thisBook.elements) {
 
       image.addEventListener('dblclick', function (event) {
-        if (event.target.offsetParent.classList.contains('.book__image')) {
+        event.preventDefault();
+        if (event.target.offsetParent.classList.contains('book__image')) {
           // console.log(image);
           if (image.classList.contains(classNames.imageFavorite)) {
             image.classList.remove(classNames.imageFavorite);
@@ -67,10 +69,20 @@
       });
 
     }
+    formular.addEventListener('click', function (event) {
+      if (event.target.matches('input')) {
+        console.log(event.target.value);
+      }
+    })
     console.log(favoriteBooks);
     // console.log('list of images:', thisBook.elements);
   }
 
   initActions();
+
+  const filters = [];
+
+
+
 }
 
