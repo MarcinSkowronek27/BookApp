@@ -69,19 +69,23 @@
       });
 
     }
+
     formular.addEventListener('click', function (event) {
-      if (event.target.checked) {
-        filters.push(event.target.value);
-      } else {
-        const remClass = filters.indexOf(event.target.value);
-        // console.log('remClass:', remClass);
-        filters.splice(remClass, 1);
+      let target = event.target;
+      if (target.tagName === 'INPUT') {
+        if (target.checked) {
+          filters.push(event.target.value);
+          console.log(event.target);
+        } else {
+          const remClass = filters.indexOf(event.target.value);
+          // console.log('remClass:', remClass);
+          filters.splice(remClass, 1);
+        }
       }
-      if (event.target.matches('input')) {
-        console.log(event.target.value);
-      }
+
       filterBooks();
     });
+
     // console.log(favoriteBooks);
     // console.log('list of images:', thisBook.elements);
   }
@@ -103,13 +107,13 @@
       }
       let bookId = filBook.id;
       // console.log(bookId);
-      let selectedImage = document.querySelector('.book__image[data-id="'+ bookId + '"]');
+      let selectedImage = document.querySelector('.book__image[data-id="' + bookId + '"]');
       // console.log(selectedImage);
       if (shouldBeHidden === true) {
         selectedImage.classList.add('hidden');
       } else {
         selectedImage.classList.remove('hidden');
-      // console.log(filBook);
+        // console.log(filBook);
       }
     }
   }
