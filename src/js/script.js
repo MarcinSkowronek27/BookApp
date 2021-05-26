@@ -101,9 +101,9 @@
           break;
         }
       }
-      let gom = filBook.id;
-      console.log(gom);
-      let selectedImage = document.querySelector('.book__image[data-id="'+ gom + '"]');
+      let bookId = filBook.id;
+      // console.log(bookId);
+      let selectedImage = document.querySelector('.book__image[data-id="'+ bookId + '"]');
       // console.log(selectedImage);
       if (shouldBeHidden === true) {
         selectedImage.classList.add('hidden');
