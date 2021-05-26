@@ -94,21 +94,27 @@
   function filterBooks() {
     for (let filBook of dataSource.books) {
       let shouldBeHidden = false;
-      for (let filter in filters) {
-        console.log(filter);
-        if (!filBook.details[filter]) {
+      for (let filter of filters) {
+        // console.log(filter);
+        if (filBook.details[filter]) {
           shouldBeHidden = true;
           break;
         }
       }
+      let gom = filBook.id;
+      console.log(gom);
+      let selectedImage = document.querySelector('.book__image[data-id="'+ gom + '"]');
+      // console.log(selectedImage);
       if (shouldBeHidden === true) {
-        const nom = document.querySelector(select.listOf.bookImage);
-        console.log('nom:', nom);
-        nom.classList.add('hidden');
+        selectedImage.classList.add('hidden');
+      } else {
+        selectedImage.classList.remove('hidden');
+      // console.log(filBook);
       }
-        nom.classList.remove('hidden');
-
     }
   }
+  // function determineRatingBgc(rating){
+
+  // }
 }
 
