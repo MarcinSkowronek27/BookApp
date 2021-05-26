@@ -76,7 +76,7 @@
         const remClass = filters.indexOf(event.target.value);
         // console.log('remClass:', remClass);
         filters.splice(remClass, 1);
-      };
+      }
       if (event.target.matches('input')) {
         console.log(event.target.value);
       }
@@ -102,10 +102,12 @@
         }
       }
       if (shouldBeHidden === true) {
-        document.getElementById()
-      } else {
-
+        const nom = document.querySelector(select.listOf.bookImage);
+        console.log('nom:', nom);
+        nom.classList.add('hidden');
       }
+        nom.classList.remove('hidden');
+
     }
   }
 }
