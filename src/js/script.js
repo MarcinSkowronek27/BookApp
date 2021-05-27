@@ -15,7 +15,7 @@
 
   const classNames = {
     imageFavorite: 'favorite',
-    bookRating: '.book__rating__fill',
+    booksRating: '.book__rating__fill',
   };
 
   const templates = {
@@ -28,21 +28,26 @@
 
     thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
     thisBook.booksList = document.querySelector(select.containerOf.booksList);
-    // console.log('bookList', thisBook.booksList);
-// poniżej zmienię in na of
+
+    // poniżej zmienię in na of
     for (let book of dataSource.books) {
+
       const ratingBgc = determineRatingBgc(book.rating);
-      let ratingWidth = book.rating * 10;
+      console.log(ratingBgc);
+      const ratingWidth = book.rating * 10;
       console.log(ratingWidth);
       const oneBook = book;
-      // console.log('oneBook', oneBook);
+      /*dwie linijki poniżej (41,42)
+      dodaję właściwości do obiektu oneBook -
+      dzięki temu szablon "wie", czym są właściwości ratingBgc i ratingWidth,
+      które ma podane w index.html */
+      oneBook.ratingBgc = ratingBgc;
+      oneBook.ratingWidth = ratingWidth;
+      console.log('oneBook', oneBook);
       const generatedHTML = templates.bookHTML(oneBook);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       thisBook.booksList.appendChild(generatedDOM);
     }
-    // debugger;
-    // console.log(thisBook.element);
-
 
   }
   render();
@@ -121,8 +126,8 @@
       }
     }
   }
-  let nom = document.querySelector(classNames.bookRating);
-  console.log(nom);
+  // let nom = document.querySelector('.book__rating__fill');
+  // console.log(nom);
   function determineRatingBgc(rating) {
     if (rating < 6) {
       return 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
