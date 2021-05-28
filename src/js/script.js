@@ -28,7 +28,6 @@
       const thisBook = this;
       thisBook.initData();
       thisBook.getElements();
-      thisBook.initActions();
       thisBook.render();
       thisBook.determineRatingBgc();
     }
@@ -37,26 +36,28 @@
       this.data = dataSource.books;
     }
     getElements() {
+      // debugger;
       const thisBook = this;
       thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
       thisBook.booksList = document.querySelector(select.containerOf.booksList);
       thisBook.formular = document.querySelector(classNames.filters);
-      thisBook.elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
+      // const elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
       // console.log('formular', thisBook.formular);
       thisBook.favoriteBooks = [];
       thisBook.filters = [];
-      console.log(thisBook.elements);
+      // console.log(elements);
     }
-
+    // debugger;
     initActions() {
       const thisBook = this;
-
+      thisBook.elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
+    // debugger;
       for (let image of thisBook.elements) {
-
+        // debugger;
         image.addEventListener('dblclick', function (event) {
           event.preventDefault();
           if (event.target.offsetParent.classList.contains('book__image')) {
-            // console.log(image);
+            console.log(image);
             if (image.classList.contains(classNames.imageFavorite)) {
               image.classList.remove(classNames.imageFavorite);
               const b = thisBook.favoriteBooks.indexOf(image.getAttribute('data-id'));
@@ -92,7 +93,7 @@
       for (let filBook of this.data) {
         let shouldBeHidden = false;
         for (let filter of thisBook.filters) {
-          // console.log(filter);
+          console.log(thisBook.filters);
           if (filBook.details[filter]) {
             shouldBeHidden = true;
             break;
@@ -117,10 +118,9 @@
       thisBook.booksList = document.querySelector(select.containerOf.booksList); //ok
 
       // poniżej zmienię in na of
-      for (let book of dataSource.books) {
-
-        // const ratingBgc = determineRatingBgc(book.rating);
-        // console.log(ratingBgc);
+      for (let book of this.data) {
+        const ratingBgc = thisBook.determineRatingBgc(book.rating);
+        console.log(ratingBgc);
         const ratingWidth = book.rating * 10;
         console.log(ratingWidth);
         const oneBook = book;
@@ -128,7 +128,7 @@
         dodaję właściwości do obiektu oneBook -
         dzięki temu szablon "wie", czym są właściwości ratingBgc i ratingWidth,
         które ma podane w index.html */
-        // oneBook.ratingBgc = ratingBgc;
+        oneBook.ratingBgc = ratingBgc;
         oneBook.ratingWidth = ratingWidth;
         console.log('oneBook', oneBook);
         const generatedHTML = templates.bookHTML(oneBook);
@@ -136,6 +136,7 @@
         thisBook.booksList.appendChild(generatedDOM);
       }
       thisBook.initActions();
+      thisBook.determineRatingBgc();
     }
     determineRatingBgc(rating) {
       if (rating < 6) {
