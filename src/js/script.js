@@ -30,6 +30,7 @@
       thisBook.initData();
       thisBook.getElements();
       thisBook.initActions();
+      thisBook.filterBooks();
     }
 
     initData() {
@@ -43,7 +44,8 @@
       thisBook.elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
       // console.log('formular', thisBook.formular);
       thisBook.favoriteBooks = [];
-      // console.log(thisBook.favoriteBooks);
+      thisBook.filters = [];
+      console.log(thisBook.filters);
     }
     initActions() {
       const thisBook = this;
@@ -67,6 +69,44 @@
           }
         });
 
+      }
+      thisBook.formular.addEventListener('click', function (event) {
+        let target = event.target;
+        if (target.tagName === 'INPUT' && target.type === 'checkbox' && target.name === 'filter') {
+          if (target.checked) {
+            thisBook.filters.push(event.target.value);
+            // console.log(event.target);
+          } else {
+            const remClass = thisBook.filters.indexOf(event.target.value);
+            // console.log('remClass:', remClass);
+            thisBook.filters.splice(remClass, 1);
+          }
+        }
+
+        // filterBooks();
+      });
+    }
+    filterBooks() {
+      const thisBook = this;
+      for (let filBook of this.data) {
+        let shouldBeHidden = false;
+        for (let filter of thisBook.filters) {
+          // console.log(filter);
+          if (filBook.details[filter]) {
+            shouldBeHidden = true;
+            break;
+          }
+        }
+        let bookId = filBook.id;
+        // console.log(bookId);
+        let selectedImage = document.querySelector('.book__image[data-id="' + bookId + '"]');
+        // console.log(selectedImage);
+        if (shouldBeHidden === true) {
+          selectedImage.classList.add('hidden');
+        } else {
+          selectedImage.classList.remove('hidden');
+          // console.log(filBook);
+        }
       }
     }
   }
