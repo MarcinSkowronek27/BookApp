@@ -29,7 +29,7 @@
       thisBook.initData();
       thisBook.getElements();
       thisBook.render();
-      thisBook.determineRatingBgc();
+      thisBook.initActions();
     }
     initData() {
       this.data = dataSource.books;
@@ -38,43 +38,44 @@
       const thisBook = this;
       thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
       thisBook.booksList = document.querySelector(select.containerOf.booksList);
-      thisBook.formular = document.querySelector(classNames.filters);
-      // console.log('formular', thisBook.formular);
+      thisBook.form = document.querySelector(classNames.filters);
+
+      // console.log('form', thisBook.form);
       thisBook.favoriteBooks = [];
       thisBook.filters = [];
       // console.log(elements);
     }
     initActions() {
       const thisBook = this;
-      thisBook.elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
-      for (let image of thisBook.elements) {
+      const elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
+      for (let image of elements) {
         image.addEventListener('dblclick', function (event) {
           event.preventDefault();
           if (event.target.offsetParent.classList.contains('book__image')) {
             console.log(image);
             if (image.classList.contains(classNames.imageFavorite)) {
               image.classList.remove(classNames.imageFavorite);
-              const b = thisBook.favoriteBooks.indexOf(image.getAttribute('data-id'));
-              // console.log('b:', b);
-              thisBook.favoriteBooks.splice(b, 1);
+              const indexBook = thisBook.favoriteBooks.indexOf(image.getAttribute('data-id'));
+              // console.log('indexBook:', indexBook);
+              thisBook.favoriteBooks.splice(indexBook, 1);
             } else {
               image.classList.add(classNames.imageFavorite);
-              const clickedImage = image.getAttribute('data-id');
-              thisBook.favoriteBooks.push(clickedImage);
+              const clickedImageId = image.getAttribute('data-id');
+              thisBook.favoriteBooks.push(clickedImageId);
             }
           }
         });
       }
-      thisBook.formular.addEventListener('click', function (event) {
-        let target = event.target;
+      thisBook.form.addEventListener('click', function (event) {
+        const target = event.target;
         if (target.tagName === 'INPUT' && target.type === 'checkbox' && target.name === 'filter') {
           if (target.checked) {
             thisBook.filters.push(event.target.value);
             console.log(event.target);
           } else {
-            const remClass = thisBook.filters.indexOf(event.target.value);
-            // console.log('remClass:', remClass);
-            thisBook.filters.splice(remClass, 1);
+            const indexNumber = thisBook.filters.indexOf(event.target.value);
+            console.log('indexNumber:', indexNumber);
+            thisBook.filters.splice(indexNumber, 1);
           }
         }
 
@@ -93,9 +94,9 @@
             break;
           }
         }
-        let bookId = filBook.id;
+        const bookId = filBook.id;
         console.log(bookId);
-        let selectedImage = document.querySelector('.book__image[data-id="' + bookId + '"]');
+        const selectedImage = document.querySelector('.book__image[data-id="' + bookId + '"]');
         console.log(selectedImage);
         if (shouldBeHidden === true) {
           selectedImage.classList.add('hidden');
@@ -115,19 +116,17 @@
         console.log(ratingBgc);
         const ratingWidth = book.rating * 10;
         console.log(ratingWidth);
-        const oneBook = book;
         /*dwie linijki poniżej (41,42)
-        dodaję właściwości do obiektu oneBook -
+        dodaję właściwości do obiektu book -
         dzięki temu szablon "wie", czym są właściwości ratingBgc i ratingWidth,
         które ma podane w index.html */
-        oneBook.ratingBgc = ratingBgc;
-        oneBook.ratingWidth = ratingWidth;
-        console.log('oneBook', oneBook);
-        const generatedHTML = templates.bookHTML(oneBook);
+        book.ratingBgc = ratingBgc;
+        book.ratingWidth = ratingWidth;
+        console.log('book', book);
+        const generatedHTML = templates.bookHTML(book);
         const generatedDOM = utils.createDOMFromHTML(generatedHTML);
         thisBook.booksList.appendChild(generatedDOM);
       }
-      thisBook.initActions();
     }
     determineRatingBgc(rating) {
       if (rating < 6) {
@@ -142,6 +141,6 @@
     }
   }
   const app = new BooksList();
-  // console.log(app);
+  console.log(app);
 }
 
