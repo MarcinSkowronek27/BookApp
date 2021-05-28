@@ -16,47 +16,62 @@
   const classNames = {
     imageFavorite: 'favorite',
     booksRating: '.book__rating__fill',
+    filters: '.filters',
   };
 
   const templates = {
     bookHTML: Handlebars.compile(document.querySelector(select.templateOf.bookCart).innerHTML),
     // booksList: Handlebars.compile(document.querySelector(select.containerOf.book).innerHTML),
   };
+  class BooksList {
+    constructor() {
+      const thisBook = this;
+      thisBook.render();
+      thisBook.getElements();
+      thisBook.initData();
 
-  function render() {
-    const thisBook = this;
-
-    thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
-    thisBook.booksList = document.querySelector(select.containerOf.booksList);
-
-    // poniżej zmienię in na of
-    for (let book of dataSource.books) {
-
-      const ratingBgc = determineRatingBgc(book.rating);
-      console.log(ratingBgc);
-      const ratingWidth = book.rating * 10;
-      console.log(ratingWidth);
-      const oneBook = book;
-      /*dwie linijki poniżej (41,42)
-      dodaję właściwości do obiektu oneBook -
-      dzięki temu szablon "wie", czym są właściwości ratingBgc i ratingWidth,
-      które ma podane w index.html */
-      oneBook.ratingBgc = ratingBgc;
-      oneBook.ratingWidth = ratingWidth;
-      console.log('oneBook', oneBook);
-      const generatedHTML = templates.bookHTML(oneBook);
-      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      thisBook.booksList.appendChild(generatedDOM);
     }
+    initData() {
+      const thisBook = this;
+      thisBook.data = dataSource.books;
+    }
+    getElements() {
+      const thisBook = this;
+      thisBook.bookCart = document.querySelector(select.templateOf.bookCart);
+      thisBook.booksList = document.querySelector(select.containerOf.booksList);
+      thisBook.formular = document.querySelector(classNames.filters);
+    }
+    render() {
+      const thisBook = this;
 
-  }
-  render();
-  const formular = document.querySelector('.filters');
-  console.log('formular', formular);
-  const favoriteBooks = [];
-  function initActions() {
+
+
+      // poniżej zmienię in na of
+      for (let book of dataSource.books) {
+
+        const ratingBgc = determineRatingBgc(book.rating);
+        console.log(ratingBgc);
+        const ratingWidth = book.rating * 10;
+        console.log(ratingWidth);
+        const oneBook = book;
+        /*dwie linijki poniżej (41,42)
+        dodaję właściwości do obiektu oneBook -
+        dzięki temu szablon "wie", czym są właściwości ratingBgc i ratingWidth,
+        które ma podane w index.html */
+        oneBook.ratingBgc = ratingBgc;
+        oneBook.ratingWidth = ratingWidth;
+        console.log('oneBook', oneBook);
+        const generatedHTML = templates.bookHTML(oneBook);
+        const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+        thisBook.booksList.appendChild(generatedDOM);
+      }
+    }
+    // const formular = document.querySelector('.filters');
+    // console.log('formular', formular);
+
+  initActions() {
     const thisBook = this;
-
+    const favoriteBooks = [];
     thisBook.elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
     for (let image of thisBook.elements) {
 
@@ -79,7 +94,7 @@
 
     }
 
-    formular.addEventListener('click', function (event) {
+    thisBook.formular.addEventListener('click', function (event) {
       let target = event.target;
       if (target.tagName === 'INPUT' && target.type === 'checkbox' && target.name === 'filter') {
         if (target.checked) {
@@ -139,5 +154,7 @@
       return 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
     }
   }
+  const app = new BooksList();
+  app.BooksList();
 }
 
