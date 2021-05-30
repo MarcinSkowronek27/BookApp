@@ -49,6 +49,9 @@
       const thisBook = this;
       const elements = thisBook.booksList.querySelectorAll(select.listOf.bookImage);
       for (let image of elements) {
+        image.addEventListener('click', function (event){
+          event.preventDefault();
+        })
         image.addEventListener('dblclick', function (event) {
           event.preventDefault();
           if (event.target.offsetParent.classList.contains('book__image')) {
